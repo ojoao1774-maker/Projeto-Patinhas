@@ -1,0 +1,13 @@
+<?php
+// Conexão com o Banco de Dados MySQL
+$servidor = "localhost";
+$usuario = "root";
+$senha = "";
+$banco = "patinhas";
+
+$conexao = new mysqli($servidor, $usuario, $senha, $banco);
+
+// Verifica conexão
+if ($conexao->connect_error) {
+    die("Falha na conexão: " . $conexao->connect_error);
+}

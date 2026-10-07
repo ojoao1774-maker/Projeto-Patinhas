@@ -1,0 +1,13 @@
+CREATE DATABASE patinhas;
+
+USE patinhas;
+
+CREATE TABLE animais (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    especie VARCHAR(50) NOT NULL,
+    idade INT NOT NULL,
+    porte VARCHAR(50) NOT NULL,
+    descricao TEXT NOT NULL,
+    data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
