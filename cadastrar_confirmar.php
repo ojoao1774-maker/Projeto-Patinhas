@@ -1,3 +1,72 @@
+<?php
+
+include("db.php");
+
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    header("Location: cadastrar.php");
+    exit;
+}
+
+$nome = trim($_POST["nome"] ?? "");
+$especie = trim($_POST["especie"] ?? "");
+$idade = $_POST["idade"] ?? "";
+$porte = trim($_POST["porte"] ?? "");
+$descricao = trim($_POST["descricao"] ?? "");
+
+$erros = [];
+
+if ($nome === "") {
+    $erros[] = "Informe o nome do animal.";
+}
+
+if ($especie === "") {
+    $erros[] = "Selecione a espécie.";
+}
+
+if ($idade === "" || !is_numeric($idade) || (int)$idade < 0) {
+    $erros[] = "Informe uma idade válida.";
+}
+
+if ($porte === "") {
+    $erros[] = "Selecione o porte.";
+}
+
+if ($descricao === "") {
+    $erros[] = "Informe uma descrição do animal.";
+}
+
+if (empty($erros)) {
+    $idade = (int)$idade;
+
+    $sql = "INSERT INTO animais (nome, especie, idade, porte, descricao)
+            VALUES (?, ?, ?, ?, ?)";
+
+    $stmt = $conexao->prepare($sql);
+
+    if ($stmt) {
+        $stmt->bind_param("ssiss", $nome, $especie, $idade, $porte, $descricao);
+
+        if ($stmt->execute()) {
+            $mensagem = "Animal cadastrado com sucesso!";
+            $sucesso = true;
+        } else {
+            $mensagem = "Erro ao cadastrar o animal: " . $stmt->error;
+            $sucesso = false;
+        }
+
+        $stmt->close();
+    } else {
+        $mensagem = "Erro ao preparar o cadastro: " . $conexao->error;
+        $sucesso = false;
+    }
+} else {
+    $mensagem = implode("<br>", $erros);
+    $sucesso = false;
+}
+
+$conexao->close();
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
