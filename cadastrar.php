@@ -1,39 +1,3 @@
-<?php
-// Inclui o arquivo de conexão com o banco
-include("db.php");
-
-// O método GET é utilizado nesta página para receber filtros opcionais.
-// Se nenhum filtro for enviado, todos os animais serão exibidos.
-$especie = trim($_GET["especie"] ?? "");
-$porte = trim($_GET["porte"] ?? "");
-
-if ($especie !== "" && $porte !== "") {
-    $sql = "SELECT * FROM animais WHERE especie = ? AND porte = ? ORDER BY id DESC";
-    $stmt = $conexao->prepare($sql);
-    $stmt->bind_param("ss", $especie, $porte);
-    $stmt->execute();
-    $resultado = $stmt->get_result();
-} elseif ($especie !== "") {
-    $sql = "SELECT * FROM animais WHERE especie = ? ORDER BY id DESC";
-    $stmt = $conexao->prepare($sql);
-    $stmt->bind_param("s", $especie);
-    $stmt->execute();
-    $resultado = $stmt->get_result();
-} elseif ($porte !== "") {
-    $sql = "SELECT * FROM animais WHERE porte = ? ORDER BY id DESC";
-    $stmt = $conexao->prepare($sql);
-    $stmt->bind_param("s", $porte);
-    $stmt->execute();
-    $resultado = $stmt->get_result();
-} else {
-    // SELECT * conforme solicitado na atividade
-    $sql = "SELECT * FROM animais ORDER BY id DESC";
-    $resultado = $conexao->query($sql);
-}
-
-$quantidade = $resultado ? $resultado->num_rows : 0;
-?>
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
