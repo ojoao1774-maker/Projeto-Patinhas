@@ -1,4 +1,5 @@
 <?php
+//fala fofinho
 // Conexão com o Banco de Dados MySQL
 $servidor = "localhost";
 $usuario = "root";
