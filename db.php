@@ -1,5 +1,4 @@
 <?php
-//fala fofinho
 // Conexão com o Banco de Dados MySQL
 $servidor = "localhost";
 $usuario = "root";
@@ -12,3 +11,4 @@ $conexao = new mysqli($servidor, $usuario, $senha, $banco);
 if ($conexao->connect_error) {
     die("Falha na conexão: " . $conexao->connect_error);
 }
+//hjgfhfghghyuftbn
